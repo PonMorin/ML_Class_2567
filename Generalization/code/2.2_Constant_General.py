@@ -4,7 +4,7 @@ from numpy.linalg import pinv
 from scipy import integrate
 
 def problem_data(X):
-    return np.sin(np.dot(np.pi, X))
+    return np.square(X)
 
 def constant_model(X, X2):
     return ( np.sin(np.pi * X) + np.sin(np.pi * X2) )/ 2
