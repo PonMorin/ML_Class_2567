@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from numpy.linalg import pinv
 
 def problem_data(X):
-    return np.sin(np.dot(np.pi, X))
+    return np.square(X)
 
 def init_theta(shape):
     theta = np.array(np.zeros(shape))
@@ -29,7 +29,7 @@ def cal_mean_model(Ed_model):
 if __name__ == "__main__":
     X = np.linspace(-1, 1)
 
-    X_b = np.c_[np.ones((len(X), 1)), X]
+    X_b = np.c_[np.zeros((len(X), 1)), X]
     
     y = problem_data(X)
 
@@ -41,7 +41,7 @@ if __name__ == "__main__":
         random_samples_X = np.random.choice(X, 2)
         y_sample = problem_data(random_samples_X)
 
-        X_b_sample = np.c_[np.ones((len(random_samples_X), 1)), random_samples_X]
+        X_b_sample = np.c_[np.zeros((len(random_samples_X), 1)), random_samples_X]
         n = len(random_samples_X)
 
         # Normal Equation
