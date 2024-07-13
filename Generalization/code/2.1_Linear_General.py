@@ -33,7 +33,7 @@ if __name__ == "__main__":
     
     y = problem_data(X)
 
-    steps = 10000
+    steps = 1000
 
     ed_prediction_list = list()
     
@@ -53,7 +53,7 @@ if __name__ == "__main__":
         plt.plot(X, sample_linear, c="black", alpha=0.01)
     
     ed_arr_prediction = np.array(ed_prediction_list)
-    mean_model = cal_mean_model(ed_prediction_list)
+    mean_model = cal_mean_model(ed_arr_prediction)
 
     bias_square = np.mean(np.square(mean_model - y))
     var_x = np.mean(np.square(ed_arr_prediction - mean_model))
