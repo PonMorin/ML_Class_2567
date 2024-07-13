@@ -6,16 +6,15 @@ from scipy import integrate
 def problem_data(X):
     return np.sin(np.dot(np.pi, X))
 
-def constant_model(X, X2):
-    return ( np.sin(np.pi * X) + np.sin(np.pi * X2) )/ 2
+def constant_model(X):
+    return np.mean(np.sin(np.dot(np.pi, X)))
 
 def cal_mean_model(period):
-    result, _= integrate.dblquad(constant_model, -1, 1, lambda x: -1, lambda x: 1)
-    mean_model = result / period
+    # result, _= integrate.dblquad(constant_model, -1, 1, lambda x: -1, lambda x: 1)
+    # mean_model = result / period
+    mean_model = 0
     return mean_model
 
-def cal_bias_square():
-    pass
 
 if __name__ == "__main__":
     X = np.linspace(-1, 1)
@@ -29,7 +28,7 @@ if __name__ == "__main__":
         random_samples_X = np.random.choice(X, 2)
         y_sample = problem_data(random_samples_X)
 
-        sample_constant = constant_model(random_samples_X[0], random_samples_X[1])
+        sample_constant = constant_model(random_samples_X)
         prediction_list.append(sample_constant)
         plt.axhline(sample_constant)
     
