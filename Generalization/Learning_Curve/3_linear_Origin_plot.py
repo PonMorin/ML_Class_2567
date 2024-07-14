@@ -45,7 +45,7 @@ if __name__ == "__main__":
         Ein_steps = []
         ed_prediction_list = []
         
-        for i in range(steps):
+        for _ in range(steps):
             random_samples_X = np.random.choice(X, m, replace=False)
             y_sample = problem_data(random_samples_X)
 
