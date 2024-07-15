@@ -3,8 +3,7 @@ import matplotlib.pyplot as plt
 from numpy.linalg import pinv
 
 def problem_data(X):
-    noise = np.random.randn(len(X)) * 0.1
-    return np.sin(np.pi * X) + noise
+    return np.sin(np.pi * X)
 
 def init_theta(shape):
     theta = np.zeros(shape)
@@ -67,11 +66,14 @@ if __name__ == "__main__":
         bias_square = np.mean(np.square(mean_model - y))
         var_x = np.mean(np.square(ed_arr_prediction - mean_model))
         variance = np.mean(var_x)
-        E_out = bias_square + variance + (0.1)**2
+        E_out = bias_square + variance
 
         list_Ein.append(np.mean(np.array([Ein_steps])))
         list_Eout.append(E_out)
 
+    plt.figure()
+    plt.plot(X, y, c="#4CAF50")
+    plt.figure()
     plt.plot(training_sizes, np.array(list_Ein), label='Training Error (Ein)', c='r')
     plt.plot(training_sizes, np.array(list_Eout), label='Validation Error (Eout)', c='b')
     plt.xlabel('Training Set Size')

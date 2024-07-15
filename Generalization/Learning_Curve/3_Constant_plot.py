@@ -58,6 +58,9 @@ if __name__ == "__main__":
         list_Ein.append(np.mean(np.array([Ein_steps])))
         list_Eout.append(E_out)
 
+    plt.figure()
+    plt.plot(X, y, c="#4CAF50")
+    plt.figure()
     plt.plot(training_sizes, np.array(list_Ein), label='Training Error (Ein)', c='r')
     plt.plot(training_sizes, np.array(list_Eout), label='Validation Error (Eout)', c='b')
     plt.xlabel('Training Set Size')
