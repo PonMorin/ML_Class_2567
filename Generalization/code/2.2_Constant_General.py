@@ -7,16 +7,13 @@ def problem_data(X):
     return np.square(X)
 
 def constant_model(X):
-    return np.mean(np.sin(np.dot(np.pi, X)))
+    return np.mean(np.square(X))
 
-def cal_mean_model(period):
+def cal_mean_model(prediction):
     # result, _= integrate.dblquad(constant_model, -1, 1, lambda x: -1, lambda x: 1)
     # mean_model = result / period
-    mean_model = 0
+    mean_model = np.mean(prediction, axis=0)
     return mean_model
-
-def cal_bias_square():
-    pass
 
 if __name__ == "__main__":
     X = np.linspace(-1, 1)
@@ -27,7 +24,7 @@ if __name__ == "__main__":
     prediction_list = list()
     
     for _ in range(steps):
-        random_samples_X = np.random.choice(X, 2)
+        random_samples_X = np.random.choice(X, 2, replace=False)
         y_sample = problem_data(random_samples_X)
 
         sample_constant = constant_model(random_samples_X)
@@ -35,7 +32,7 @@ if __name__ == "__main__":
         plt.axhline(sample_constant)
     
     prediction_arr = np.array(prediction_list)
-    mean_model = cal_mean_model(steps)
+    mean_model = cal_mean_model(prediction_arr)
 
     bias_square = np.mean(np.square(mean_model - y))
     var_x = np.mean(np.square(prediction_arr - mean_model))
