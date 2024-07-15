@@ -71,6 +71,7 @@ if __name__ == "__main__":
         list_Ein.append(np.mean(np.array([Ein_steps])))
         list_Eout.append(E_out)
 
+    print(E_out)
     plt.figure()
     plt.plot(X, y, c="#4CAF50")
     plt.figure()
