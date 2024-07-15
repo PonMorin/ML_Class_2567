@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from numpy.linalg import pinv
 
 def problem_data(X):
-    noise = np.random.randn(len(X)) * 0.3
+    noise = np.random.normal(0, 0.3, X.shape)
     return np.sin(np.pi * X) + noise
 
 def init_theta(shape):
@@ -67,11 +67,11 @@ if __name__ == "__main__":
         bias_square = np.mean(np.square(mean_model - y))
         var_x = np.mean(np.square(ed_arr_prediction - mean_model))
         variance = np.mean(var_x)
-        E_out = bias_square + variance + (0.3)**2
+        E_out = bias_square + variance
 
         list_Ein.append(np.mean(np.array([Ein_steps])))
         list_Eout.append(E_out)
-    
+    print(E_out)
     plt.figure()
     plt.plot(X, y, c="#4CAF50")
     plt.figure()
