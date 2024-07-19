@@ -5,10 +5,6 @@ from numpy.linalg import pinv
 def problem_data(X):
     return np.sin(np.dot(np.pi, X))
 
-def init_theta(shape):
-    theta = np.array(np.zeros(shape))
-    return theta
-
 def cost_function(n, Y, Y_pred):
     error = Y_pred - Y
     cost = (1/2*n) * np.dot(error.T, error)
