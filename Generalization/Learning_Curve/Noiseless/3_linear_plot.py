@@ -21,7 +21,7 @@ def normal_equation(X, Y):
     return theta
 
 def cal_mean_model(Ed_model):
-    mean_model = np.mean(Ed_model, axis=1)
+    mean_model = np.mean(Ed_model, axis=0)
     return mean_model
 
 if __name__ == "__main__":
@@ -36,7 +36,6 @@ if __name__ == "__main__":
     
     list_Ein = []
     list_Eout = []
-    func_g = []
     bias_list = []
 
     for m in training_sizes:
@@ -60,22 +59,25 @@ if __name__ == "__main__":
             Ein_steps.append(e)
             
             # Find y_pred to cal Eout
+            
             normal_theta_val = normal_equation(X_b, y)
             theta_arr_val = np.array(normal_theta_val)
             sample_linear = linear_model(X_b, theta_arr_val)
+            ed_prediction_list.append(sample_linear)
             val_e = cost_function(m, y, sample_linear)
             Eout_steps.append(val_e)
 
-        mean_model = cal_mean_model(ed_prediction_list)
-        func_g.append(mean_model) 
-        # print(np.array(func_g))
+        ed_arr_prediction = np.array(ed_prediction_list)
+        mean_model = cal_mean_model(ed_arr_prediction)
+
         list_Ein.append(np.mean(Ein_steps))
         list_Eout.append(np.mean(Eout_steps))
 
-        bias = np.mean(np.square(np.mean(func_g) - y))
+        bias = np.mean(np.square(mean_model - y))
         bias_list.append(bias) 
 
-    plt.plot(training_sizes, np.array(bias_list), label=f'Bias: {np.mean(np.array(bias_list)):.2f}', linestyle='--')
+    bias_mean = np.mean(np.array(bias_list))
+    plt.plot(training_sizes, np.array(bias_list), label=f'Bias: {bias_mean:.2f}', linestyle='--')
     plt.plot(training_sizes, np.array(list_Ein), label='Training Error (Ein)', c='r')
     plt.plot(training_sizes, np.array(list_Eout), label='Validation Error (Eout)', c='b')
     plt.xlabel('Training Set Size')

@@ -12,7 +12,7 @@ def constant_model(X):
 def cal_mean_model(prediction):
     # result, _= integrate.dblquad(constant_model, -1, 1, lambda x: -1, lambda x: 1)
     # mean_model = result / period
-    mean_model = np.mean(prediction)
+    mean_model = np.mean(prediction, axis=0)
     return mean_model
 
 def cost_function(n, Y, Y_pred):
@@ -29,7 +29,6 @@ if __name__ == "__main__":
     
     list_Ein = []
     list_Eout = []
-    func_g = []
     bias_list = []
     for m in training_sizes:
         Ein_steps = []
@@ -40,8 +39,8 @@ if __name__ == "__main__":
             random_samples_X = np.random.choice(X, m, replace=False)
             y_sample = problem_data(random_samples_X)
 
-            # sample_constant = constant_model(random_samples_X)
-            # prediction_list.append(sample_constant)
+            sample_constant = constant_model(random_samples_X)
+            prediction_list.append(sample_constant)
 
             # Find Cost for Ein
             train_constant = constant_model(random_samples_X)
@@ -50,29 +49,28 @@ if __name__ == "__main__":
 
             # Find Eout
             val_set = constant_model(X)
-            prediction_list.append(val_set)
             val_e = cost_function(m, y, val_set)
             Eout_steps.append(val_e)
 
         prediction_arr = np.array(prediction_list)
         mean_model = cal_mean_model(prediction_arr)
-        
-        # func_g.append(mean_model)
-    #     list_Ein.append(np.mean(Ein_steps))
-    #     list_Eout.append(np.mean(Eout_steps))
+
+        list_Ein.append(np.mean(np.array([Ein_steps])))
+        list_Eout.append(np.mean(Eout_steps, axis=0))
 
         bias = np.mean(np.square(mean_model - y))
         bias_list.append(bias) 
-    cal_bias = np.mean(np.array(bias_list))
-    print(cal_bias)
-    # plt.figure()
-    # plt.plot(X, y, c="#4CAF50")
-    # plt.figure()
-    # plt.plot(training_sizes, np.array(bias_list), label=f'Bias: {np.mean(np.array(bias_list)):.2f}', linestyle='--')
-    # plt.plot(training_sizes, np.array(list_Ein), label='Training Error (Ein)', c='r')
-    # plt.plot(training_sizes, np.array(list_Eout), label='Validation Error (Eout)', c='b')
-    # plt.xlabel('Training Set Size')
-    # plt.ylabel('Error')
-    # plt.legend()
-    # plt.title('Learning Curve')
-    # plt.show()
+
+    bias_mean = np.mean(np.array(bias_list))
+
+    plt.figure()
+    plt.plot(X, y, c="#4CAF50")
+    plt.figure()
+    plt.plot(training_sizes, np.array(bias_list), label=f'Bias: {bias_mean:.2f}', linestyle='--')
+    plt.plot(training_sizes, np.array(list_Ein), label='Training Error (Ein)', c='r')
+    plt.plot(training_sizes, np.array(list_Eout), label='Validation Error (Eout)', c='b')
+    plt.xlabel('Training Set Size')
+    plt.ylabel('Error')
+    plt.legend()
+    plt.title('Learning Curve')
+    plt.show()
