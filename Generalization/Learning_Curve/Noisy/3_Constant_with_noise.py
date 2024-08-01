@@ -13,7 +13,7 @@ def constant_model(X):
 def cal_mean_model(prediction):
     # result, _= integrate.dblquad(constant_model, -1, 1, lambda x: -1, lambda x: 1)
     # mean_model = result / period
-    mean_model = np.mean(prediction)
+    mean_model = np.mean(prediction, axis=0)
     return mean_model
 
 def cost_function(n, Y, Y_pred):
@@ -56,18 +56,19 @@ if __name__ == "__main__":
 
         prediction_arr = np.array(prediction_list)
         mean_model = cal_mean_model(prediction_arr)
-        func_g.append(mean_model)
 
         list_Ein.append(np.mean(np.array([Ein_steps])))
         list_Eout.append(np.mean(Eout_steps, axis=0))
 
-        bias = np.mean(np.square(np.mean(func_g) - y))
+        bias = np.mean(np.square(mean_model - y))
         bias_list.append(bias) 
-    
+    # print(bias)
+    # print(np.mean(np.array(bias_list)))
+    bias_mean = np.mean(np.array(bias_list))
     plt.figure()
     plt.plot(X, y, c="#4CAF50")
     plt.figure()
-    plt.plot(training_sizes, np.array(bias_list), label=f'Bias: {np.mean(np.array(bias_list)):.2f}', linestyle='--')
+    plt.plot(training_sizes, np.array(bias_list), label=f'Bias: {bias_mean:.2f}', linestyle='--')
     plt.plot(training_sizes, np.array(list_Ein), label='Training Error (Ein)', c='r')
     plt.plot(training_sizes, np.array(list_Eout), label='Validation Error (Eout)', c='b')
     plt.xlabel('Training Set Size')

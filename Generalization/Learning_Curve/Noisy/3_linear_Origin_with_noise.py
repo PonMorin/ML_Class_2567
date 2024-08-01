@@ -33,7 +33,7 @@ if __name__ == "__main__":
     
     y = problem_data(X)
 
-    steps = 10000
+    steps = 1000
 
     # ed_prediction_list = list()
     
@@ -41,45 +41,50 @@ if __name__ == "__main__":
     
     list_Ein = []
     list_Eout = []
+    bias_list = []
 
     for m in training_sizes:
         Ein_steps = []
+        Eout_steps = []
         ed_prediction_list = []
         
         for _ in range(steps):
-            random_samples_X = np.random.choice(X, m, replace=False)
+            random_samples_X = np.random.choice(X, m)
             y_sample = problem_data(random_samples_X)
 
-            X_b_sample = np.c_[np.ones((len(random_samples_X), 1)), random_samples_X]
+            X_b_sample = np.c_[np.zeros((len(random_samples_X), 1)), random_samples_X]
            
             # Normal Equation
             normal_theta = normal_equation(X_b_sample, y_sample)
             theta_arr = np.array(normal_theta)
-
-            # Find y_pred to cal Eout
-            sample_linear = linear_model(X_b, theta_arr)
-            ed_prediction_list.append(sample_linear)
 
             # Find Cost for Ein
             train_linear = linear_model(X_b_sample, theta_arr)
             e = cost_function(m, y_sample, train_linear)
             Ein_steps.append(e)
             
-
+            # Find y_pred to cal Eout
+            normal_theta_val = normal_equation(X_b, y)
+            theta_arr_val = np.array(normal_theta_val)
+            sample_linear = linear_model(X_b, theta_arr_val)
+            ed_prediction_list.append(sample_linear)
+            val_e = cost_function(m, y, sample_linear)
+            Eout_steps.append(val_e)
+        
         ed_arr_prediction = np.array(ed_prediction_list)
         mean_model = cal_mean_model(ed_arr_prediction)
-        bias_square = np.mean(np.square(mean_model - y))
-        var_x = np.mean(np.square(ed_arr_prediction - mean_model))
-        variance = np.mean(var_x)
-        E_out = bias_square + variance
+        
+        list_Ein.append(np.mean(Ein_steps))
+        list_Eout.append(np.mean(Eout_steps))
 
-        list_Ein.append(np.mean(np.array([Ein_steps])))
-        list_Eout.append(E_out)
-
-    print(E_out)
+        bias = np.mean(np.square(mean_model - y))
+        bias_list.append(bias) 
+        
+    bias_mean = np.mean(np.array(bias_list))
     plt.figure()
     plt.plot(X, y, c="#4CAF50")
     plt.figure()
+    plt.plot(training_sizes, np.array(bias_list), label=f'Bias: {bias_mean:.2f}', linestyle='--')
     plt.plot(training_sizes, np.array(list_Ein), label='Training Error (Ein)', c='r')
     plt.plot(training_sizes, np.array(list_Eout), label='Validation Error (Eout)', c='b')
     plt.xlabel('Training Set Size')
