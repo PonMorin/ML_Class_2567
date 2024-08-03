@@ -47,5 +47,8 @@ if __name__ == '__main__':
             rss_List.append(rss)
         vitualize_data(rss_List, theta_stack[:, -1], ridge_lambda)
 
+    plt.xlabel('Slope Values')
+    plt.ylabel('Sum of Squared Residuals + λ x Slope^2')
     plt.axis([-6, 8, -0.5, 40])
+    plt.legend()
     plt.show()
