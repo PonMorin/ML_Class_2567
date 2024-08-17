@@ -8,9 +8,9 @@ from sklearn.model_selection import cross_val_score, train_test_split
 
 # Generate data
 np.random.seed(0)
-X = np.linspace(0, 2*np.pi, 500)
+X = np.linspace(0, 2*np.pi, 20)
 # y = np.sin(X) + np.random.normal(0, 0, 100)
-y = np.sin(X) + np.random.normal(0, 0.3, 500)
+y = np.sin(X) + np.random.normal(0, 0.3, 20)
 
 # Split the data into training and testing sets
 # X_train, X_test = X[:80], X[80:]
@@ -19,7 +19,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=1, train_
 # Fit and plot models of different degrees
 
 degrees = [1, 3, 8]
-splits = [10, 20, 40, 80]
+splits = [10]
 
 # Create polynomial features
 plt.figure(figsize=(8, 8))
