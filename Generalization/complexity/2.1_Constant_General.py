@@ -30,7 +30,7 @@ if __name__ == "__main__":
 
         sample_constant = constant_model(random_samples_X)
         prediction_list.append(sample_constant)
-        plt.axhline(sample_constant)
+        # plt.axhline(sample_constant)
     
     prediction_arr = np.array(prediction_list)
     mean_model = cal_mean_model(prediction_arr)

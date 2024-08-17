@@ -19,7 +19,7 @@ if __name__ == "__main__":
     X = np.linspace(-1, 1)
     y = problem_data(X)
 
-    steps = 100
+    steps = 1000
 
     prediction_list = list()
     
@@ -29,7 +29,7 @@ if __name__ == "__main__":
 
         sample_constant = constant_model(random_samples_X)
         prediction_list.append(sample_constant)
-        plt.axhline(sample_constant)
+        # plt.axhline(sample_constant)
     
     prediction_arr = np.array(prediction_list)
     mean_model = cal_mean_model(prediction_arr)
