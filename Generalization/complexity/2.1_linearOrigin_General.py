@@ -29,7 +29,7 @@ if __name__ == "__main__":
     
     y = problem_data(X)
 
-    steps = 10000
+    steps = 1000
 
     ed_prediction_list = list()
     
