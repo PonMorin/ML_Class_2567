@@ -2,7 +2,6 @@ from sklearn.datasets import load_digits
 from sklearn.model_selection import train_test_split
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib
 
 def standardization(X):
     mean_x = np.mean(X)
