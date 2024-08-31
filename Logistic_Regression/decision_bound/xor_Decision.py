@@ -62,9 +62,9 @@ if __name__ == "__main__":
 
     # XOR Gate
     X = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])
-    y = np.array([0, 1, 1, 0])  # Correct XOR targets
+    y = np.array([0, 1, 1, 0]) 
 
-    # Adding interaction term
+    # Interaction Feature
     X_interaction = np.c_[X, X[:, 0] * X[:, 1]]
     X_b = np.c_[np.ones((len(X_interaction), 1)), X_interaction]
     n = len(X)
@@ -89,7 +89,6 @@ if __name__ == "__main__":
     xx, yy = np.meshgrid(np.arange(x_min, x_max, 0.01),
                          np.arange(y_min, y_max, 0.01))
 
-    # Predict the class for each point in the grid with the interaction term
     Z = logistic_model(np.c_[np.ones((xx.ravel().shape[0], 1)),
                              xx.ravel(), yy.ravel(), (xx * yy).ravel()], theta)
     Z = Z.reshape(xx.shape)
