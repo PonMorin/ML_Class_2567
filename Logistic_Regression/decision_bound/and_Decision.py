@@ -114,6 +114,6 @@ if __name__ == "__main__":
     plt.fill_between(x_vals, decision_boundary, x2_max+5, color='tab:orange', alpha=0.2)
     plt.xlabel("Column 1")
     plt.ylabel("Column 2")
-    plt.title("Non-linear Decision Boundary AND")
+    plt.title("Decision Boundary AND")
     plt.legend(loc='best')
     plt.show()
