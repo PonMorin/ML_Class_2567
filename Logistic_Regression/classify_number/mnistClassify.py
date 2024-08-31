@@ -1,3 +1,4 @@
+#Pon
 from sklearn.datasets import load_digits
 from sklearn.model_selection import train_test_split
 import numpy as np
@@ -89,7 +90,7 @@ if __name__ == "__main__":
     theta_image = theta[1:].reshape(8, 8)
     scale = np.abs(theta_image).max()
 
-    # Plot the coefficients as an image
+    # Plot the coefficients
     plt.imshow(theta_image, cmap=plt.cm.bwr, vmin=-scale, vmax=scale, interpolation='bilinear')
     plt.colorbar()
     plt.title('Coefficient of Digits 0 and 1')
