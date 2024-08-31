@@ -41,7 +41,7 @@ def cost_function(y, y_pred):
     cost = -np.mean(y * np.log(y_pred) + (1 - y) * np.log(1 - y_pred))
     return cost 
 
-def update_weight(n, old_weight, X, y, y_pred, lr=0.1):
+def update_weight(n, old_weight, X, y, y_pred, lr=0.3):
     error = y_pred - y
     new_weight = old_weight - ((lr / n) * (np.dot(X.T, error)))
     return new_weight
