@@ -1,3 +1,4 @@
+# Pon
 from sklearn.datasets import load_digits
 from sklearn.model_selection import train_test_split
 import numpy as np
@@ -85,7 +86,7 @@ if __name__ == "__main__":
     y_test_pred_class = np.where(y_pred_test >= 0.5, 1, 0)
     print(y_test_pred_class[3])
 
-    # Plotting coefficients
+    # Plotting the coefficients
     fig, axes = plt.subplots(2, 5, figsize=(10, 5))
     axes = axes.ravel()
 
