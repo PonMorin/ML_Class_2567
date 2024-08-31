@@ -98,7 +98,7 @@ if __name__ == "__main__":
     plt.figure(figsize=(10, 8))
     plt.contourf(xx, yy, Z, alpha=0.8, cmap=plt.cm.RdBu)
     plt.scatter(X[:, 0], X[:, 1], c=y, s=100, edgecolors='k', cmap=plt.cm.Spectral)
-    plt.title("Non-linear Decision Boundary XOR")
+    plt.title("Decision Boundary XOR")
     plt.xlabel("Col 1")
     plt.ylabel("Col 2")
     plt.show()
