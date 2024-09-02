@@ -64,13 +64,24 @@ if __name__ == "__main__":
     X = digits.data
     y = digits.target
 
+    # Visualize some samples before training
+    # fig, axes = plt.subplots(2, 5, figsize=(10, 5))
+    # for i, ax in enumerate(axes.ravel()):
+    #     ax.imshow(X[i].reshape(8, 8), cmap=plt.cm.gray)
+    #     ax.set_title(f'Label: {y[i]}')
+    #     ax.axis('off')
+    # plt.suptitle('Samples from Digits Dataset Before Training')
+    # plt.show()
+
+
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=0)
 
-    # Standardize the data
-    X_train_normal = standardization(X_train)
+    # print(np.max(X_train))
+
+    X_train_normal = X_train / 16.0
     X_b_train = np.c_[np.ones((len(X_train_normal), 1)), X_train_normal]
 
-    X_test_normal = standardization(X_test)
+    X_test_normal = X_test / 16.0
     X_b_test = np.c_[np.ones((len(X_test_normal), 1)), X_test_normal]
 
     n_classes = len(np.unique(y_train))
@@ -84,7 +95,7 @@ if __name__ == "__main__":
 
     y_pred_test = logistic_model(X_b_test, all_theta)
     y_test_pred_class = np.where(y_pred_test >= 0.5, 1, 0)
-    print(y_test_pred_class[3])
+    print(y_test_pred_class[1])
 
     # Plotting the coefficients
     fig, axes = plt.subplots(2, 5, figsize=(10, 5))

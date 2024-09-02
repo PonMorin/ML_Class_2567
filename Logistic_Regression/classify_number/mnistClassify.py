@@ -11,6 +11,7 @@ def standardization(X):
     return X_sd
 
 def F1_score(y, y_pred):
+    y = np.array(y)
     tp, tn, fp, fn = 0, 0, 0, 0
     for i in range(len(y)):
         if y[i] == 1 and y_pred[i] == 1:
@@ -71,10 +72,10 @@ if __name__ == "__main__":
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=0)
 
-    X_train_normal = standardization(X_train)
+    X_train_normal = X_train / 16.0
     X_b_train = np.c_[np.ones((len(X_train_normal), 1)), X_train_normal]
 
-    X_test_normal = standardization(X_test)
+    X_test_normal = X_test / 16.0
     X_b_test = np.c_[np.ones((len(X_test_normal), 1)), X_test_normal]
 
     theta = init_theta(X_b_train)
@@ -92,6 +93,6 @@ if __name__ == "__main__":
 
     # Plot the coefficients
     plt.imshow(theta_image, cmap=plt.cm.bwr, vmin=-scale, vmax=scale, interpolation='bilinear')
-    plt.colorbar()
+    # plt.colorbar()
     plt.title('Coefficient of Digits 0 and 1')
     plt.show()
