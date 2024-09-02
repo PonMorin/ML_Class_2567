@@ -233,7 +233,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-test.py
+tes*.py
 test2.py
 # End of https://www.toptal.com/developers/gitignore/api/macos,python,windows
 
