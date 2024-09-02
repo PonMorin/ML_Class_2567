@@ -72,7 +72,7 @@ def plot_decision_boundary(X, y, theta, title, is_xor=False):
         X_grid = np.c_[np.ones((xx1.ravel().shape[0], 1)), xx1.ravel(), xx2.ravel()]
     
     y_grid_pred = hypothesis(X_grid, theta).reshape(xx1.shape)
-    
+    print(theta)
     # Plot decision boundary
     plt.contour(xx1, xx2, y_grid_pred, levels=[0.5], cmap="Greys", vmin=0, vmax=1)
     
