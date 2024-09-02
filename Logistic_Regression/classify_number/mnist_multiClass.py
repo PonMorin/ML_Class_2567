@@ -38,6 +38,9 @@ def logistic_model(X, theta):
 def sigmoid(z):
     return 1 / (1 + np.exp(-z))
 
+def softmax(z):
+    z = np.exp(z) / np.sum(np.exp(z))
+
 def cost_function(y, y_pred):
     m = len(y)
     cost = - (1/m) * np.sum(y * np.log(y_pred) + (1 - y) * np.log(1 - y_pred))
