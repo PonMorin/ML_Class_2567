@@ -16,6 +16,98 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
+class Baye_Decision():
+    def __init__(self):
+        pass
+
+    def naive_bayes_equation(self, TYPE=1):
+        if(TYPE):
+            print('\n')
+            print('         P(E|H) P(H)')
+            print('P(H|E) = -----------')
+            print('             P(E)   ')
+            print('                    ')
+            print('H = Event')
+            print('E = Evidence')
+            print('Pr(H|E) = Posterior Probability')
+            print('Pr(E|H) = Likelihood')
+            print('Pr(H)   = Prior Probability')
+            print('Pr(E)   = Predictor Prior Probability')
+            print('\n')
+        else:
+            print('\n')
+            print('         P(x|c) P(c)')
+            print('P(c|x) = -----------')
+            print('             P(x)   ')
+            print('                    ')
+            print('c = Class')
+            print('x = Attribute')
+            print('P(c|x) = Posterior Probability')
+            print('P(x|c) = Likelihood')
+            print('P(c)   = Class Prior Probability')
+            print('P(x)   = Predictor Prior Probability')
+            print('\n')
+    def naive_bayes(self):
+        pass
+
+        # likelihood = 0
+        # posterior = 0
+        # Event = 0 # H
+        # Evidence = 0 # E
+        # try:
+        #     while True:
+        #         rate = int(input("What Rate you have Red(1) or Blue(2): "))
+        #         if rate == 1:
+        #             redbox_rate = float(input("Enter percent of red box: "))
+        #             if 0 <= redbox_rate <= 1:
+        #                 bluebox_rate = 1 - redbox_rate
+        #                 break
+        #             else:
+        #                 print("invalid input that must be float in between 0-1")
+        #         elif rate == 2:
+        #             bluebox_rate = float(input("Enter percent of blue box: "))
+        #             if 0 <= bluebox_rate <= 1:
+        #                 redbox_rate = 1 - bluebox_rate
+        #                 break
+        #             else:
+        #                 print("invalid input that must be float in between 0-1")
+        #         else:
+        #             print("You incorrect input try again: ")
+            
+        #     Apple[0] = float(input("Enter number of apple in red box: "))
+        #     Orange[0] = float(input("Enter number of orange in red box: "))
+        #     Apple[1] = float(input("Enter number of apple in blue box: "))
+        #     Orange[1] = float(input("Enter number of orange in blue box: "))
+        #     totalred = Apple[0] + Orange[0]
+        #     totalblue = Apple[1] + Orange[1]
+
+        #     apple_red = (Apple[0]/totalred)*redbox_rate
+        #     apple_blue = (Apple[1]/totalblue)*bluebox_rate
+        #     orange_red = (Orange[0]/totalred)*redbox_rate
+        #     orange_blue = (Orange[1]/totalblue)*bluebox_rate
+        #     fruit_apple = apple_red + apple_blue
+        #     fruit_orange = orange_red + orange_blue
+        #     print(redbox_rate)
+        #     print(bluebox_rate)
+        #     print(totalred)
+        #     print(totalblue)
+        #     print("p(F = a|B = r) = ",Apple[0]/totalred)
+        #     print("p(F = o|B = r) = ",Apple[1]/totalblue)
+        #     print("p(F = a|B = b) = ",Orange[0]/totalred)
+        #     print("p(F = o|B = b) = ",Orange[1]/totalblue)
+        #     print("Apple = %.2f"%(apple_red + apple_blue))
+        #     print("Orange = %.2f"%(orange_red + orange_blue))
+        #     print("Apple from red box rate = %.2f"%(apple_red/fruit_apple))
+        #     print("Apple from red box rate = %.2f"%(apple_blue/fruit_apple))
+        #     print("Orange from red box rate = %.2f"%(orange_red/fruit_orange))
+        #     print("Orange from red box rate = %.2f"%(orange_blue/fruit_orange))
+        # except ValueError:
+        #     print("Error Invalid input Type")
+        # except ZeroDivisionError:
+        #     print("Error Zero Divisoion")
+        #     return 0
+
+
 def standardization(X):
     mean_x = np.array(np.mean(X))
     std_x = np.array(np.std(X))
@@ -25,49 +117,114 @@ def standardization(X):
 def Sigmoid(x):
     return 1/(1+np.exp(-x))
 
+def mean_value(n, X):
+    return(1/n)*np.sum(X)
+
+def standard_deviation(n, X):
+    mean = np.sum(X)/n
+    # print(mean)
+    # variance = sum([((x-mean)**2) for x in X])/n
+    variance = sum([((x-mean)**2) for x in X])/(n-1)
+    # print(variance)
+    result = variance ** 0.5
+    # print(result**2)
+    return result
+
+def density_function(mean, X, std):
+    # print(mean)
+    # return (1/(np.sqrt(2*np.pi))*std)*np.exp(np.negative((X - mean)**2/(2*std**2)))
+    return np.exp(np.negative((X - mean)**2/(2*std**2)))/((np.sqrt(2*np.pi))*std)
+
+def normal_distribution(n, X, std):
+    mean = np.sum(X)/n
+    variance = sum([((x-mean)**2) for x in X])/n
+    std = variance ** 0.5
+    return np.exp(np.negative(0.5*(np.square((X - mean)/std))))/((np.sqrt(2*np.pi))*std)
+
+def init_theta(X):
+    theta = np.array(np.zeros(X))
+    return theta
+
 def logistic_model(X, theta):
-    z = np.dot(X, theta.T)
+    z = np.dot(X, theta)
     y_pred = Sigmoid(z)
     return y_pred
 
-df = sns.load_dataset('iris')
-X = df.drop('species', axis=1)
-y, class_name = pd.factorize(df.species, sort=True)
+def cost_function(y, y_pred):
+    cost = np.dot(-y.T, np.log(y_pred)) - np.dot((1-y).T, np.log(1 - y_pred))
+    return cost 
 
-sc = StandardScaler()
-X_sc = sc.fit_transform(X)
-X_train, X_test, y_train, y_test = train_test_split(X_sc, y, test_size=0.25, random_state=1)
-data = np.array(df)
-species = [0, 0, 0]
+def update_weight(n, old_weight, X, y, y_pred, lr=0.2):
+    error = y_pred - y
+    new_weight = old_weight - ( (lr/n) * (np.dot(X.T, error)) )
+    return new_weight
 
-likelihood = 0
-posterior = 0
-Event = 0 # H
-Evidence = 0 # E
+def gradient_descent(n, X, y, theta, steps):
+    cost_history = []
+    Y_pred = logistic_model(X, theta)
+    theta_list = []
+    cost_history.append(1e10)
 
-# print(len(df))
-# def Discriminant():
+    for _ in range(1, steps+1):
+        Y_pred = logistic_model(X, theta)
 
-# print(math.log(1))
+        cost = cost_function(y, Y_pred)
+        cost_history.append(cost)
+        
+        theta = update_weight(n, theta, X, y, Y_pred)
+        theta_list.append(theta)
 
-for data in df['species']:
-    if data == 'setosa':
-        species[0] += 1
-    elif data == 'versicolor':
-        species[1] += 1
-    elif data == 'virginica':
-        species[2] += 1
-print(species)
+    cost_history.pop(0)            
+        
+    return cost_history, theta_list
 
-# print(df.keys)
-# print(df['sepal_length'])
-# print(df['sepal_width'])
-# print(df['petal_length'])
-# print(df['petal_width'])
-# print(df['species'])
+if __name__ == '__main__':
 
-sns.FacetGrid(df, hue="species", height=6).map(plt.scatter, 'sepal_length', 'sepal_width').add_legend()
-plt.show()
+    df = sns.load_dataset('iris')
+    X = df.drop('species', axis=1)
+    y, class_name = pd.factorize(df.species, sort=True)
+
+    sc = StandardScaler()
+    X_sc = sc.fit_transform(X)
+    X_train, X_test, y_train, y_test = train_test_split(X_sc, y, test_size=0.25, random_state=1)
+    data = np.array(df)
+    species = [0, 0, 0]
+
+    # print(len(df))
+    # def Discriminant():
+
+    # print(math.log(1))
+
+    for data in df['species']:
+        if data == 'setosa':
+            species[0] += 1
+        elif data == 'versicolor':
+            species[1] += 1
+        elif data == 'virginica':
+            species[2] += 1
+    # print(species)
+    # print(len(df['species']))
+    
+    test_list = [4, 5, 8, 9, 10] 
+    ary = [2, 3, 4, 5, 6]
+    # ary = np.array([[1, 2, 3, 2], [4, 5, 6, 5],])
+    # print(density_function(len(ary), ary, np.std(ary)))
+    # print(density_function(3, 2, 4))
+    print(normal_distribution(len(ary), ary, np.std(X)))
+    
+    # print(ary.shape)
+    
+    # model = Baye_Decision()
+    # model.naive_bayes()
+    # print(df.keys)
+    # print(df['sepal_length'])
+    # print(df['sepal_width'])
+    # print(df['petal_length'])
+    # print(df['petal_width'])
+    # print(df['species'])
+
+    # sns.FacetGrid(df, hue="species", height=6).map(plt.scatter, 'sepal_length', 'sepal_width').add_legend()
+    # plt.show()
 
 
 
