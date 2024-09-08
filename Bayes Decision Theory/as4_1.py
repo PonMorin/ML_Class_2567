@@ -1,6 +1,7 @@
 # กำหนดค่า
 import numpy as np
 import matplotlib.pyplot as plt
+from scipy.stats import multivariate_normal
 
 # กำหนดค่าพารามิเตอร์ของการแจกแจง
 mu_c1 = np.array([-1, -1])
@@ -21,12 +22,46 @@ w, b = linear_discriminant(mu_c1, mu_c2, Sigma)
 x1_range = np.linspace(-4, 4, 400)
 x2_range = np.linspace(-4, 4, 400)
 X1, X2 = np.meshgrid(x1_range, x2_range)
+pos = np.dstack((X1, X2))
+
+# คำนวณ likelihood
+rv_c1 = multivariate_normal(mu_c1, Sigma)
+rv_c2 = multivariate_normal(mu_c2, Sigma)
+likelihood_c1 = rv_c1.pdf(pos)
+likelihood_c2 = rv_c2.pdf(pos)
+
+# คำนวณ posterior โดยสมมติว่า p(c1) = p(c2) = 0.5
+posterior_c1 = likelihood_c1 / (likelihood_c1 + likelihood_c2)
+posterior_c2 = likelihood_c2 / (likelihood_c1 + likelihood_c2)
+
+# คำนวณขอบตัดสินใจ
 decision_boundary = w[0] * X1 + w[1] * X2 + b
 
-plt.figure(figsize=(8, 8))
+# วาดกราฟ likelihood
+plt.figure(figsize=(18, 6))
+
+plt.subplot(1, 3, 1)
+plt.contourf(X1, X2, likelihood_c1, cmap='Blues')
 plt.contour(X1, X2, decision_boundary, levels=[0], colors='black')
+plt.title('Likelihood Class 1')
 plt.xlabel(r'$x_1$', fontsize=14)
 plt.ylabel(r'$x_2$', fontsize=14)
-plt.title('ขอบตัดสินใจโดยใช้ค่าพารามิเตอร์ที่กำหนด', fontsize=16, fontname='Tahoma')
-plt.grid(True)
+
+plt.subplot(1, 3, 2)
+plt.contourf(X1, X2, likelihood_c2, cmap='Greens')
+plt.contour(X1, X2, decision_boundary, levels=[0], colors='black')
+plt.title('Likelihood Class 2')
+plt.xlabel(r'$x_1$', fontsize=14)
+plt.ylabel(r'$x_2$', fontsize=14)
+
+# วาดกราฟ posterior
+plt.subplot(1, 3, 3)
+plt.contourf(X1, X2, posterior_c1, cmap='Blues', alpha=0.5)
+plt.contourf(X1, X2, posterior_c2, cmap='Greens', alpha=0.5)
+plt.contour(X1, X2, decision_boundary, levels=[0], colors='black')
+plt.title('Posterior Probabilities')
+plt.xlabel(r'$x_1$', fontsize=14)
+plt.ylabel(r'$x_2$', fontsize=14)
+
+plt.tight_layout()
 plt.show()
