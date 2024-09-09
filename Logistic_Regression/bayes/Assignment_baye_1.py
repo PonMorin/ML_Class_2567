@@ -159,6 +159,33 @@ def update_weight(n, old_weight, X, y, y_pred, lr=0.2):
     new_weight = old_weight - ( (lr/n) * (np.dot(X.T, error)) )
     return new_weight
 
+def density_function(mean, X, std):
+    # print(mean)
+    # return (1/(np.sqrt(2*np.pi))*std)*np.exp(np.negative((X - mean)**2/(2*std**2)))
+    return np.exp(np.negative((X - mean)**2/(2*std**2)))/((np.sqrt(2*np.pi))*std)
+
+def normal_distribution(n, X, std):
+    mean = np.sum(X)/n
+    variance = sum([((x-mean)**2) for x in X])/n
+    std = variance ** 0.5
+    return np.exp(np.negative(0.5*(np.square((X - mean)/std))))/((np.sqrt(2*np.pi))*std)
+
+def single_threshold(n, X, Class):
+    mean = np.sum(X)/n
+    variance = sum([((x-mean)**2) for x in X])/n
+    std = variance ** 0.5
+    # print(X-mean)
+    return np.negative(np.square(X - mean)/2*variance) - 0.5*np.log(2*np.pi) - np.log(std) - np.log(normal_distribution(len(Class), Class, np.std(Class))) - np.log(normal_distribution(len(X), X, np.std(X)))
+
+def linear_discriminant(mu_c1, mu_c2, Sigma):
+    Sigma_inv = np.linalg.inv(Sigma)
+    print(Sigma_inv)
+    w = np.dot(Sigma_inv, mu_c1 - mu_c2)
+    print(w)
+    b = -0.5 * np.dot(np.dot(mu_c1, Sigma_inv), mu_c1) + 0.5 * np.dot(np.dot(mu_c2, Sigma_inv), mu_c2)
+    print(b)
+    return w, b
+
 def gradient_descent(n, X, y, theta, steps):
     cost_history = []
     Y_pred = logistic_model(X, theta)
