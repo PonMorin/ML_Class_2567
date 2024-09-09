@@ -38,25 +38,26 @@ posterior_c2 = likelihood_c2 / (likelihood_c1 + likelihood_c2)
 decision_boundary = w[0] * X1 + w[1] * X2 + b
 
 # วาดกราฟ likelihood
-plt.figure(figsize=(18, 6))
+plt.figure(figsize=(12, 6))
 
-plt.subplot(1, 3, 1)
-plt.contourf(X1, X2, likelihood_c1, cmap='Blues')
+plt.subplot(1, 2, 1)
+plt.contourf(X1, X2, likelihood_c1, cmap='Reds', alpha=0.5)
+plt.contourf(X1, X2, likelihood_c2, cmap='Greens', alpha=0.5)
 plt.contour(X1, X2, decision_boundary, levels=[0], colors='black')
-plt.title('Likelihood Class 1')
+plt.title('Likelihood Class 1 Red, Class 2 Green')
 plt.xlabel(r'$x_1$', fontsize=14)
 plt.ylabel(r'$x_2$', fontsize=14)
 
-plt.subplot(1, 3, 2)
-plt.contourf(X1, X2, likelihood_c2, cmap='Greens')
-plt.contour(X1, X2, decision_boundary, levels=[0], colors='black')
-plt.title('Likelihood Class 2')
-plt.xlabel(r'$x_1$', fontsize=14)
-plt.ylabel(r'$x_2$', fontsize=14)
+# plt.subplot(1, 3, 2)
+# plt.contourf(X1, X2, likelihood_c2, cmap='Greens')
+# plt.contour(X1, X2, decision_boundary, levels=[0], colors='black')
+# plt.title('Likelihood Class 2')
+# plt.xlabel(r'$x_1$', fontsize=14)
+# plt.ylabel(r'$x_2$', fontsize=14)
 
 # วาดกราฟ posterior
-plt.subplot(1, 3, 3)
-plt.contourf(X1, X2, posterior_c1, cmap='Blues', alpha=0.5)
+plt.subplot(1, 2, 2)
+plt.contourf(X1, X2, posterior_c1, cmap='Reds', alpha=0.5)
 plt.contourf(X1, X2, posterior_c2, cmap='Greens', alpha=0.5)
 plt.contour(X1, X2, decision_boundary, levels=[0], colors='black')
 plt.title('Posterior Probabilities')
