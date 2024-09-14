@@ -4,7 +4,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import scipy.stats
 from scipy.stats import norm
-import numpy as np
 
 def density_function(mean, X, std):
     # return (1/(np.sqrt(2*np.pi))*std)*np.exp(np.negative((X - mean)**2/(2*std**2)))
