@@ -1,1 +1,1 @@
-X1_range
+probability_pr(X, mean, D, covariance)
