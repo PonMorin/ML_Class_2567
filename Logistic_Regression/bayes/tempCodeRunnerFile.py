@@ -1,1 +1,0 @@
-probability_pr(X, mean, D, covariance)
