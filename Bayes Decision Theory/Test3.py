@@ -7,17 +7,20 @@ mu_c1 = np.array([-1, -1])
 mu_c2 = np.array([1, 1])
 Sigma = np.array([[1, 0], [0, 1]])
 
-#postriria
+# กำหนดค่า prior
+prior_c1 = 0.7  # Prior probability of class 1
+prior_c2 = 0.3  # Prior probability of class 2
 
 # สร้างฟังก์ชัน Linear Discriminant
-def linear_discriminant(mu_c1, mu_c2, Sigma):
+def linear_discriminant(mu_c1, mu_c2, Sigma, prior_c1, prior_c2):
     Sigma_inv = np.linalg.inv(Sigma)
     w = np.dot(Sigma_inv, mu_c1 - mu_c2)
     b = -0.5 * np.dot(np.dot(mu_c1, Sigma_inv), mu_c1) + 0.5 * np.dot(np.dot(mu_c2, Sigma_inv), mu_c2)
+    b += np.log(prior_c1 / prior_c2)  # เพิ่มผลของ prior probabilities
     return w, b
 
 # คำนวณ w และ b
-w, b = linear_discriminant(mu_c1, mu_c2, Sigma)
+w, b = linear_discriminant(mu_c1, mu_c2, Sigma, prior_c1, prior_c2)
 
 # สร้างกราฟ
 x1_range = np.linspace(-4, 4, 400)
@@ -41,9 +44,9 @@ pos = np.column_stack((x1_range, np.full_like(x1_range, x2_fixed)))
 likelihood_c1 = rv_c1.pdf(pos)
 likelihood_c2 = rv_c2.pdf(pos)
 
-# คำนวณ posterior โดยสมมติว่า p(c1) = p(c2) = 0.5
-posterior_c1 = 0.5
-posterior_c2 = 0.5
+# คำนวณ posterior โดยใช้ Bayes' theorem
+posterior_c1L = prior_c1 * likelihood_c1L / (prior_c1 * likelihood_c1L + prior_c2 * likelihood_c2L)
+posterior_c2L = prior_c2 * likelihood_c2L / (prior_c1 * likelihood_c1L + prior_c2 * likelihood_c2L)
 
 # คำนวณขอบตัดสินใจ
 decision_boundary = w[0] * X1 + w[1] * X2 + b
@@ -51,23 +54,23 @@ decision_boundary = w[0] * X1 + w[1] * X2 + b
 # สร้างกราฟ likelihood และ posterior
 plt.figure(figsize=(12, 12))
 
-# # วาดกราฟ likelihood สำหรับ 1 มิติ
-# plt.subplot(2, 2, 1)
-# plt.plot(x1_range, likelihood_c1, label='Class 1', color='red')
-# plt.plot(x1_range, likelihood_c2, label='Class 2', color='green')
-# plt.title('1D Likelihood')
-# plt.xlabel(r'$x_1$', fontsize=14)
-# plt.ylabel('Likelihood', fontsize=14)
-# plt.legend()
+# วาดกราฟ likelihood สำหรับ 1 มิติ
+plt.subplot(2, 2, 1)
+plt.plot(x1_range, likelihood_c1, label='Class 1', color='red')
+plt.plot(x1_range, likelihood_c2, label='Class 2', color='green')
+plt.title('1D Likelihood')
+plt.xlabel(r'$x_1$', fontsize=14)
+plt.ylabel('Likelihood', fontsize=14)
+plt.legend()
 
-# # วาดกราฟ posterior สำหรับ 1 มิติ
-# plt.subplot(2, 2, 2)
-# plt.plot(x1_range, posterior_c1, label='Class 1', color='red')
-# plt.plot(x1_range, posterior_c2, label='Class 2', color='green')
-# plt.title('1D Posterior')
-# plt.xlabel(r'$x_1$', fontsize=14)
-# plt.ylabel('Posterior', fontsize=14)
-# plt.legend()
+# วาดกราฟ posterior สำหรับ 1 มิติ
+plt.subplot(2, 2, 2)
+plt.plot(x1_range, posterior_c1L[:, int(len(x2_range)/2)], label='Class 1', color='red')
+plt.plot(x1_range, posterior_c2L[:, int(len(x2_range)/2)], label='Class 2', color='green')
+plt.title('1D Posterior')
+plt.xlabel(r'$x_1$', fontsize=14)
+plt.ylabel('Posterior', fontsize=14)
+plt.legend()
 
 # วาดกราฟ likelihood สำหรับ 2 มิติ
 plt.subplot(2, 2, 3)
