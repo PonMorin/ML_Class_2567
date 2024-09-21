@@ -50,62 +50,7 @@ class Baye_Decision():
     def naive_bayes(self):
         pass
 
-        # likelihood = 0
-        # posterior = 0
-        # Event = 0 # H
-        # Evidence = 0 # E
-        # try:
-        #     while True:
-        #         rate = int(input("What Rate you have Red(1) or Blue(2): "))
-        #         if rate == 1:
-        #             redbox_rate = float(input("Enter percent of red box: "))
-        #             if 0 <= redbox_rate <= 1:
-        #                 bluebox_rate = 1 - redbox_rate
-        #                 break
-        #             else:
-        #                 print("invalid input that must be float in between 0-1")
-        #         elif rate == 2:
-        #             bluebox_rate = float(input("Enter percent of blue box: "))
-        #             if 0 <= bluebox_rate <= 1:
-        #                 redbox_rate = 1 - bluebox_rate
-        #                 break
-        #             else:
-        #                 print("invalid input that must be float in between 0-1")
-        #         else:
-        #             print("You incorrect input try again: ")
-            
-        #     Apple[0] = float(input("Enter number of apple in red box: "))
-        #     Orange[0] = float(input("Enter number of orange in red box: "))
-        #     Apple[1] = float(input("Enter number of apple in blue box: "))
-        #     Orange[1] = float(input("Enter number of orange in blue box: "))
-        #     totalred = Apple[0] + Orange[0]
-        #     totalblue = Apple[1] + Orange[1]
-
-        #     apple_red = (Apple[0]/totalred)*redbox_rate
-        #     apple_blue = (Apple[1]/totalblue)*bluebox_rate
-        #     orange_red = (Orange[0]/totalred)*redbox_rate
-        #     orange_blue = (Orange[1]/totalblue)*bluebox_rate
-        #     fruit_apple = apple_red + apple_blue
-        #     fruit_orange = orange_red + orange_blue
-        #     print(redbox_rate)
-        #     print(bluebox_rate)
-        #     print(totalred)
-        #     print(totalblue)
-        #     print("p(F = a|B = r) = ",Apple[0]/totalred)
-        #     print("p(F = o|B = r) = ",Apple[1]/totalblue)
-        #     print("p(F = a|B = b) = ",Orange[0]/totalred)
-        #     print("p(F = o|B = b) = ",Orange[1]/totalblue)
-        #     print("Apple = %.2f"%(apple_red + apple_blue))
-        #     print("Orange = %.2f"%(orange_red + orange_blue))
-        #     print("Apple from red box rate = %.2f"%(apple_red/fruit_apple))
-        #     print("Apple from red box rate = %.2f"%(apple_blue/fruit_apple))
-        #     print("Orange from red box rate = %.2f"%(orange_red/fruit_orange))
-        #     print("Orange from red box rate = %.2f"%(orange_blue/fruit_orange))
-        # except ValueError:
-        #     print("Error Invalid input Type")
-        # except ZeroDivisionError:
-        #     print("Error Zero Divisoion")
-        #     return 0
+        
 
 
 def standardization(X):
@@ -253,6 +198,54 @@ if __name__ == '__main__':
     # sns.FacetGrid(df, hue="species", height=6).map(plt.scatter, 'sepal_length', 'sepal_width').add_legend()
     # plt.show()
 
+    
+
+# likelihood = [0,0]
+# prior = [0,0]
+# posterior = 0
+# event = 0 # H
+# evidence = 0 # E
+# rate = 0
+# A = 0.0
+# B = 0.0
+
+# try:
+#     while True:
+#         rate = int(input("What Rate you have A or B => 1,2 respective: "))
+#         if rate == 1:
+#             A = float(input("Enter probability percent of A: "))
+#             if 0 <= A <= 1:
+#                 B = 1 - A
+#                 break
+#             else:
+#                 print("invalid input that must be float in between 0-1")
+#         elif rate == 2:
+#             B = float(input("Enter probability percent of B: "))
+#             if 0 <= B <= 1:
+#                 A = 1 - B
+#                 break
+#             else:
+#                 print("invalid input that must be float in between 0-1")
+#         else:
+#             print("You incorrect input try again: ")
+    
+#     likelihood = float(input("Enter number of : "))
 
 
-
+#     posterior = (likelihood * A)/B
+#     # posterior = (likelihood*prior)/evidence
+   
+#     print("p(F = a|B = r) = ",Apple[0]/totalred)
+#     print("p(F = o|B = r) = ",Apple[1]/totalblue)
+#     print("p(F = a|B = b) = ",Orange[0]/totalred)
+#     print("p(F = o|B = b) = ",Orange[1]/totalblue)
+#     print("Apple = %.2f"%(apple_red + apple_blue))
+#     print("Orange = %.2f"%(orange_red + orange_blue))
+#     print("Apple from red box rate = %.2f"%(apple_red/fruit_apple))
+#     print("Apple from red box rate = %.2f"%(apple_blue/fruit_apple))
+#     print("Orange from red box rate = %.2f"%(orange_red/fruit_orange))
+#     print("Orange from red box rate = %.2f"%(orange_blue/fruit_orange))
+# except ValueError:
+#     print("Error Invalid input Type")
+# except ZeroDivisionError:
+#     print("Error Zero Divisoion")
