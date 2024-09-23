@@ -11,14 +11,21 @@ import pandas as pd
 # X, y = make_circles(n_samples=200, noise=0.1, factor=0.5, random_state=42)
 X, y = make_moons(n_samples=200, noise=0.2, random_state=42)
 
+mean_class_1 = np.array([2, 0])
+mean_class_2 = np.array([1, 0])
+cov_class_1 = np.array([[0.5, 0],[0, 0.25]])
+cov_class_2 = np.array([[0.25, 0],[0, 0.5]])
+covariance_class1 = [[2, 0],[0, 4]]
+covariance_class2 = [[4, 0],[0, 2]]
+inv_cov_class1 = np.linalg.inv(cov_class_1)
+inv_cov_class2 = np.linalg.inv(cov_class_2)
+prior_class_1 = 0.5
+prior_class_2 = 0.5
+
 means = [np.mean(X[y == k], axis=0) for k in np.unique(y)]
 covariances = [np.cov(X[y == k].T) for k in np.unique(y)]
 priors = [np.mean(y == k) for k in np.unique(y)]
-
-μ1 = np.array([2, 0])
-μ2 = np.array([1, 0])
-covariance_class1 = [[2, 0],[0, 4]]
-covariance_class2 = [[4, 0],[0, 2]]
+print(np.unique(y))
 #Mean cov
 def pooled_covariance(X, y):
 
@@ -72,7 +79,6 @@ def qda_posterior(X):
     posteriors = exp_discriminants / np.sum(exp_discriminants, axis=1, keepdims=True)
     return posteriors
 
-
 # Create a grid of points
 xx, yy = np.meshgrid(x_range,y_range)
 grid = np.c_[xx.ravel(), yy.ravel()]
@@ -80,47 +86,6 @@ Z = qda_predict(grid).reshape(xx.shape)
 print(Z)
 posterior_feature1 = qda_posterior(np.c_[x_range, np.zeros_like(x_range)])
 posterior_feature2 = qda_posterior(np.c_[np.zeros_like(y_range), y_range])
-
-#PLOTING LIKELIHOOD
-# Plot the likelihoods for feature 1
-# plt.figure(figsize=(14, 6))
-# plt.subplot(1, 2, 1)
-# for k in range(len(means)):
-#     plt.plot(x_range, likelihoods_feature1[k], label=f'Class {k}')
-# plt.title('Likelihood for Feature 1')
-# plt.xlabel('Feature 1')
-# plt.ylabel('Probability Density')
-# plt.legend()
-# # Plot the likelihoods for feature 2
-# plt.subplot(1, 2, 2)
-# for k in range(len(means)):
-#     plt.plot(y_range, likelihoods_feature2[k], label=f'Class {k}')
-# plt.title('Likelihood for Feature 2')
-# plt.xlabel('Feature 2')
-# plt.ylabel('Probability Density')
-# plt.legend()
-# plt.tight_layout()
-# plt.show()
-
-# #PLOT A POSTERIOR
-# fig, ax = plt.subplots(1, 2, figsize=(12, 6))
-# for i in range(2):
-#     ax[0].plot(x_range, posterior_feature1[:, i], label=f'Class {i}')
-# ax[0].set_title('Posterior Probability for Feature 1')
-# ax[0].set_xlabel('Feature 1')
-# ax[0].set_ylabel('Posterior Probability')
-# ax[0].legend()
-
-# # Feature 2
-# for i in range(2):
-#     ax[1].plot(y_range, posterior_feature2[:, i], label=f'Class {i}')
-# ax[1].set_title('Posterior Probability for Feature 2')
-# ax[1].set_xlabel('Feature 2')
-# ax[1].set_ylabel('Posterior Probability')
-# ax[1].legend()
-
-# plt.tight_layout()
-# plt.show()
 
 # sample_class_1[]
 # PLOTING DECISION
