@@ -19,8 +19,8 @@ names = [
 
 # ตัวจำแนกประเภทพร้อมพจน์ Second-Order Polynomial
 classifiers = [
-    make_pipeline(PolynomialFeatures(degree=3), StandardScaler(), LogisticRegression(random_state=42)),  # Logistic Regression with Polynomial Features
-    make_pipeline(PolynomialFeatures(degree=3), StandardScaler(), LinearDiscriminantAnalysis()),  # LDA with Polynomial Features
+    make_pipeline(PolynomialFeatures(degree=2), StandardScaler(), LogisticRegression(random_state=42)),  # Logistic Regression with Polynomial Features
+    make_pipeline(PolynomialFeatures(degree=2), StandardScaler(), LinearDiscriminantAnalysis()),  # LDA with Polynomial Features
     QuadraticDiscriminantAnalysis(),  # QDA (ไม่ต้องเพิ่มพจน์พหุนามเพราะเป็น non-linear อยู่แล้ว)
 ]
 
