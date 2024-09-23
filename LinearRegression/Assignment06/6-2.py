@@ -1,6 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.datasets import make_classification
+from sklearn.datasets import make_circles
+
 
 # Sigmoid function
 def sigmoid(z):
@@ -89,6 +91,11 @@ def generate_datasets():
 
     return (X1, y1), (X2, y2)
 
+# Function to generate circular dataset
+def generate_circular_dataset():
+    X, y = make_circles(n_samples=100, noise=0.1, factor=0.5, random_state=42)
+    return X, y
+
 # Train and evaluate logistic regression models on generated datasets
 def train_and_evaluate_generated_data():
     (X1, y1), (X2, y2) = generate_datasets()
@@ -113,6 +120,22 @@ def train_and_evaluate_generated_data():
     print(f"Actual labels: {y2}\n")
     plot_decision_boundary(X2, y2, theta2, "Decision Boundary for Non-Linearly Separable Data")
 
+def train_and_evaluate_circular_data():
+    X, y = generate_circular_dataset()
+
+    # Hyperparameters
+    alpha = 0.1  # Learning rate
+    iterations = 1000  # Number of iterations
+
+    print("Training model on circular dataset...")
+    theta, _ = logistic_regression(X, y, alpha, iterations)
+    print(f"Trained parameters (theta) for circular dataset: {theta}")
+    predictions = predict(X, theta)
+    print(f"Predictions: {predictions}")
+    print(f"Actual labels: {y}\n")
+    plot_decision_boundary(X, y, theta, "Decision Boundary for Circular Data")
+    
 # Run training and evaluation on generated data
 if __name__ == "__main__":
     train_and_evaluate_generated_data()
+    train_and_evaluate_circular_data()

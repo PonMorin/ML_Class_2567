@@ -40,9 +40,8 @@ def gradient_descent(X, y, theta, alpha, iterations):
 def logistic_regression(X, y, alpha, iterations):
     X = np.c_[np.ones((X.shape[0], 1)), X]
     theta = np.zeros(X.shape[1])
-    
     theta, loss_history = gradient_descent(X, y, theta, alpha, iterations)
-    
+    print(theta)
     return theta, loss_history
 
 # Predict function
