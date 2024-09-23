@@ -16,7 +16,7 @@ def linear_discriminant(mu_c1, mu_c2, Sigma, prior_c1, prior_c2):
     Sigma_inv = np.linalg.inv(Sigma)
     w = np.dot(Sigma_inv, mu_c1 - mu_c2)
     b = -0.5 * np.dot(np.dot(mu_c1, Sigma_inv), mu_c1) + 0.5 * np.dot(np.dot(mu_c2, Sigma_inv), mu_c2)
-    b += np.log(prior_c1 / prior_c2)  # เพิ่มผลของ prior probabilities
+    b += np.log(prior_c1 / prior_c2)
     return w, b
 
 # คำนวณ w และ b
