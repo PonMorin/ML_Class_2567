@@ -8,8 +8,8 @@ mu_c2 = np.array([1, 1])
 Sigma = np.array([[1, 0], [0, 1]])
 
 # กำหนดค่า prior
-prior_c1 = 0.7  # Prior probability of class 1
-prior_c2 = 0.3  # Prior probability of class 2
+prior_c1 = 0.5  # Prior probability of class 1
+prior_c2 = 0.5  # Prior probability of class 2
 
 # สร้างฟังก์ชัน Linear Discriminant
 def linear_discriminant(mu_c1, mu_c2, Sigma, prior_c1, prior_c2):
